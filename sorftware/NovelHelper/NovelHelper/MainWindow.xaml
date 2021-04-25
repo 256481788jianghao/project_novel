@@ -47,7 +47,7 @@
                 </Grid>
             </pu:TabItemEx>
             <pu:TabItemEx Width="100" Header="人物"></pu:TabItemEx>
-            <pu:TabItemEx Width="100" Header="事件"></pu:TabItemEx>
+            <pu:TabItemEx Width="100" Header="情节"></pu:TabItemEx>
             <pu:TabItemEx Width="100" Header="图形化"></pu:TabItemEx>
         </pu:TabControlEx>
     </Grid>

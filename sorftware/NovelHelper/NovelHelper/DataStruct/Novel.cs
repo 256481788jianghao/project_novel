@@ -13,5 +13,6 @@ namespace NovelHelper.DataStruct
         public string ConfigFilePath { get; set; } = "NO FILE";
         public string Novel_Name { get; set; }
         public string Novel_Intruduction { get; set; }
+        public List<NovelPeople> Novel_People_List { get; set; } = new List<NovelPeople>();
     }
 }

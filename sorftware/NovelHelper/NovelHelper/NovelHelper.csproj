@@ -78,6 +78,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataStruct\Novel.cs" />
+    <Compile Include="DataStruct\NovelPeople.cs" />
+    <Compile Include="DataStruct\NovelPeopleRelation.cs" />
     <Compile Include="GVL.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
