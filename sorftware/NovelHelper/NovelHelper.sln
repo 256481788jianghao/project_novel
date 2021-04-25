@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovelHelper", "NovelHelper\NovelHelper.csproj", "{371345B7-7A97-4DC4-9939-7759ECF5E461}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{371345B7-7A97-4DC4-9939-7759ECF5E461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{371345B7-7A97-4DC4-9939-7759ECF5E461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{371345B7-7A97-4DC4-9939-7759ECF5E461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{371345B7-7A97-4DC4-9939-7759ECF5E461}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD91F263-41DA-4069-B377-48641EF3BB7A}
+	EndGlobalSection
+EndGlobal
