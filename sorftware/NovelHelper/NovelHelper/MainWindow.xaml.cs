@@ -30,9 +30,9 @@ namespace NovelHelper
             InitializeComponent();
         }
 
-        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        void SaveConfig()
         {
-            if(GVL.G_Novel == null || string.IsNullOrEmpty(GVL.G_Novel.ConfigFilePath))
+            if (GVL.G_Novel == null || string.IsNullOrEmpty(GVL.G_Novel.ConfigFilePath))
             {
                 SaveFileDialog dialog = new SaveFileDialog();
                 if (dialog.ShowDialog() == true)
@@ -53,6 +53,11 @@ namespace NovelHelper
 
         }
 
+        private void Button_Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveConfig();
+        }
+
         private void Button_Import_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -68,6 +73,14 @@ namespace NovelHelper
         private void WindowEx_Loaded(object sender, RoutedEventArgs e)
         {
             DataContext = GVL.G_Novel;
+        }
+
+        private void WindowEx_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.S))
+            {
+                //SaveConfig();
+            }
         }
     }
 }

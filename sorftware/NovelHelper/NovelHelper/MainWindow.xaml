@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:pu="clr-namespace:EasyGoodLookUI;assembly=EasyGoodLookUI"
              IconAreaWidth="100"
-        Title="写作助手" Height="450" Width="800" MainHeaderHeight="46" SubHeaderHeight="4" Loaded="WindowEx_Loaded">
+        Title="写作助手" Height="450" Width="800" MainHeaderHeight="46" SubHeaderHeight="4" Loaded="WindowEx_Loaded" KeyDown="WindowEx_KeyDown">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -25,7 +25,7 @@
         </Grid>
         <pu:TabControlEx TabStripPlacement="Left" Grid.Row="1">
             <pu:TabItemEx Width="100" Header="基本信息">
-                <Grid pu:GridOptions.ShowBorder="True">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -33,11 +33,17 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="140"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <pu:InputBox NameStr="名称：" ValueStr="{Binding Novel_Name,Mode=TwoWay}"></pu:InputBox>
-                    <Label Content="简介" VerticalAlignment="Center" Grid.Row="1" HorizontalAlignment="Center"/>
-                    <TextBox Text="{Binding Novel_Intruduction,Mode=TwoWay}" Grid.Row="2" TextWrapping="Wrap" AcceptsReturn="True"></TextBox>
+                    <Border BorderBrush="Black" Grid.Row="1" BorderThickness="2,2,2,1">
+                        <Label Content="简介" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border BorderBrush="Black" Grid.Row="2" BorderThickness="2,1,2,2">
+                        <TextBox Text="{Binding Novel_Intruduction,Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"></TextBox>
+                    </Border>
+                    
                 </Grid>
             </pu:TabItemEx>
             <pu:TabItemEx Width="100" Header="人物"></pu:TabItemEx>
