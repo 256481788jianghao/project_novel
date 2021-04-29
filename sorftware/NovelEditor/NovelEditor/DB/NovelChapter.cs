@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NovelEditor.DB
 {
-    class NovelChapter
+    class NovelChapter:IComparable<NovelChapter>
     {
         public int ChapterIndex { get; set; }
         public string Name { get ; set ; }
@@ -16,6 +16,22 @@ namespace NovelEditor.DB
         public NovelChapter()
         {
             GID = Guid.NewGuid();
+        }
+
+        public int CompareTo(NovelChapter other)
+        {
+            if(ChapterIndex > other.ChapterIndex)
+            {
+                return 1;
+            }
+            else if(ChapterIndex < other.ChapterIndex)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

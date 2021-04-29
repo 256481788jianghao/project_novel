@@ -59,10 +59,20 @@ namespace NovelEditor
             }
         }
 
-        void SaveToFile(string filepath)
+        bool SaveToFile(string filepath)
         {
-            string alltext = JsonConvert.SerializeObject(GVL.Instance);
-            File.WriteAllText(filepath, alltext);
+            if (File.Exists(filepath))
+            {
+                string alltext = JsonConvert.SerializeObject(GVL.Instance);
+                File.WriteAllText(filepath, alltext);
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("请导入或新建Novel");
+                return false;
+            }
+           
         }
 
         GVL ReadFromFile(string filepath)
@@ -153,6 +163,26 @@ namespace NovelEditor
                 }
             }
             GVL.Instance.UpdateTreeView();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.S))
+            {
+                try
+                {
+                    if (SaveToFile(GVL.Instance.NovelFilePath))
+                    {
+                        GVL.Instance.Label_WritePanel_Tip_Content = "Save : " + DateTime.Now.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                    GVL.Instance.Label_WritePanel_Tip_Content = "Save error : " + DateTime.Now.ToString();
+                }
+                e.Handled = true;
+            }
         }
     }
 }

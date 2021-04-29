@@ -38,6 +38,9 @@ namespace NovelEditor
 
         [JsonIgnore]
         public string Panel_Cpation { get; set; }
+        
+        [JsonIgnore]
+        public string Label_WritePanel_Tip_Content { get; set; }
 
         public void CopyFrom(GVL other)
         {
@@ -50,9 +53,10 @@ namespace NovelEditor
         {
             CurNovelTree.Clear();
             INode rootNode = new INode(CurNovel.GID, CurNovel.Name);
+            CurNovel.Chapters.Sort();
             foreach(NovelChapter item in CurNovel.Chapters)
             {
-                rootNode.Children.Add(new INode(item.GID, item.Name));
+                rootNode.Children.Add(new INode(item.GID, item.ChapterIndex.ToString()+"."+item.Name));
             }
             CurNovelTree.Add(rootNode);
         }

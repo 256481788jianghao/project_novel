@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NovelEditor"
         mc:Ignorable="d"
         xmlns:pu="clr-namespace:EasyGoodLookUI;assembly=EasyGoodLookUI"
-        Title="NovelEditor" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="NovelEditor" Height="450" Width="800" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -51,11 +51,11 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition/>
-                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged"/>
                         <RichTextBox Grid.Row="1"></RichTextBox>
-                        <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Grid.Row="2"></Label>
+                        <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Content="{Binding Label_WritePanel_Tip_Content}" Grid.Row="2"></Label>
                     </Grid>
                     <GridSplitter Width="3"/>
                 </Grid>
