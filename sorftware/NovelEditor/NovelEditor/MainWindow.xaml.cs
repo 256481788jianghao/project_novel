@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using NovelEditor.DB;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +44,71 @@ namespace NovelEditor
 
         void NewNovelCB(string filename, string filepath)
         {
-            MessageBox.Show(filename);
+            GVL.Instance.NovelFilePath = filepath;
+            try
+            {
+                Novel newNovel = new Novel();
+                newNovel.Name = filename;
+                GVL.Instance.CurNovel = newNovel;
+                SaveToFile(GVL.Instance.NovelFilePath);
+                GVL.Instance.UpdateTreeView();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        void SaveToFile(string filepath)
+        {
+            string alltext = JsonConvert.SerializeObject(GVL.Instance);
+            File.WriteAllText(filepath, alltext);
+        }
+
+        GVL ReadFromFile(string filepath)
+        {
+            try
+            {
+                string alltext = File.ReadAllText(filepath);
+                GVL tempInstance = JsonConvert.DeserializeObject<GVL>(alltext);
+                tempInstance.NovelFilePath = filepath;
+                return tempInstance;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return null;
+            }
+            
+        }
+
+        private void MenuItem_Import_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "project file|*.json|all files|*.*";
+            if(dialog.ShowDialog() == true)
+            {
+                GVL.Instance.CopyFrom(ReadFromFile(dialog.FileName));
+            }
+        }
+
+        private void TreeView_MenuItem_AddChapter_Click(object sender, RoutedEventArgs e)
+        {
+            AddChapterForm form = new AddChapterForm();
+            form.ShowDialog();
+        }
+
+        private void MenuItem_Save_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveToFile(GVL.Instance.NovelFilePath);
+                MessageBox.Show("success");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

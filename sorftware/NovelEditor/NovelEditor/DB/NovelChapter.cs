@@ -7,18 +7,15 @@ using System.Threading.Tasks;
 
 namespace NovelEditor.DB
 {
-    class NovelChapter : INode
+    class NovelChapter
     {
-        public Guid GID;
+        public int ChapterIndex { get; set; }
         public string Name { get ; set ; }
 
-        ObservableCollection<INode> _Children;
-        public ObservableCollection<INode> Children { get => _Children; set => _Children = value; }
-
+        public Guid GID { get; }
         public NovelChapter()
         {
             GID = Guid.NewGuid();
-            _Children = new ObservableCollection<INode>();
         }
     }
 }

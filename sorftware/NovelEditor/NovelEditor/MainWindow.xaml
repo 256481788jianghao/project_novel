@@ -16,8 +16,8 @@
         <Menu>
             <MenuItem Header="Porject" Height="30">
                 <MenuItem x:Name="MenuItem_NewNovel" Header="New Novel" Click="MenuItem_NewNovel_Click"></MenuItem>
-                <MenuItem Header="Import"></MenuItem>
-                <MenuItem Header="Export"></MenuItem>
+                <MenuItem x:Name="MenuItem_Import" Header="Import" Click="MenuItem_Import_Click"></MenuItem>
+                <MenuItem x:Name="MenuItem_Save" Header="Save" Click="MenuItem_Save_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help" Height="30">
                 <MenuItem Header="Version"></MenuItem>
@@ -30,14 +30,30 @@
                         <ColumnDefinition Width="180"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TreeView></TreeView>
+                    <TreeView x:Name="TreeView_Novel" ItemsSource="{Binding CurNovelTree}">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsExpanded" Value="True" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="TreeView_MenuItem_AddChapter" Header="ADD Chapter" Click="TreeView_MenuItem_AddChapter_Click"></MenuItem>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <Label Content="{Binding Name}"></Label>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition/>
                             <RowDefinition Height="20"/>
                         </Grid.RowDefinitions>
-                        <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                        <TextBox VerticalContentAlignment="Center" Text="{Binding Panel_Cpation}" HorizontalContentAlignment="Left"/>
                         <RichTextBox Grid.Row="1"></RichTextBox>
                         <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Grid.Row="2"></Label>
                     </Grid>

@@ -7,9 +7,21 @@ using System.Threading.Tasks;
 
 namespace NovelEditor.DB
 {
-    interface INode
+    class INode
     {
-        string Name { get; set; }
-        ObservableCollection<INode> Children { get; set; }
+        public Guid GID { get; set; }
+        public string Name { get; set; }
+        public ObservableCollection<INode> Children { get; }
+
+        public INode()
+        {
+            Children = new ObservableCollection<INode>();
+        }
+
+        public INode(Guid gID, string name):this()
+        {
+            GID = gID;
+            Name = name;
+        }
     }
 }

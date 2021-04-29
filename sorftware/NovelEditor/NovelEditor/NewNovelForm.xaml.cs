@@ -31,7 +31,7 @@ namespace NovelEditor
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.FileName = InputBox_FileName.ValueStr.ToString() + ".json";
-            dialog.Filter = "project file|*.json";
+            dialog.Filter = "project file|*.json|all files|*.*";
             if(dialog.ShowDialog() == true)
             {
                 InputBox_FilePath.ValueStr = dialog.FileName;
