@@ -10,13 +10,23 @@ namespace NovelEditor.DB
     class Novel
     {
         public string Name { get ; set ; }
-        public ObservableCollection<NovelChapter> Chapters { get; set; }
+        public List<NovelChapter> Chapters { get; set; }
         public Guid GID { get ; }
 
         public Novel()
         {
-            Chapters = new ObservableCollection<NovelChapter>();
+            Chapters = new List<NovelChapter>();
             GID = Guid.NewGuid();
+        }
+
+        public bool IsNovelGUID(Guid gid)
+        {
+            return gid == GID;
+        }
+
+        public NovelChapter FindChapterByGUID(Guid gid)
+        {
+            return Chapters.Find(it => it.GID == gid);
         }
     }
 }

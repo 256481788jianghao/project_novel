@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="180"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TreeView x:Name="TreeView_Novel" ItemsSource="{Binding CurNovelTree}">
+                    <TreeView x:Name="TreeView_Novel" ItemsSource="{Binding CurNovelTree}" TreeViewItem.Selected="TreeView_Novel_Selected" SelectedItemChanged="TreeView_Novel_SelectedItemChanged">
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="TreeViewItem">
                                 <Setter Property="IsExpanded" Value="True" />
@@ -53,7 +53,7 @@
                             <RowDefinition/>
                             <RowDefinition Height="20"/>
                         </Grid.RowDefinitions>
-                        <TextBox VerticalContentAlignment="Center" Text="{Binding Panel_Cpation}" HorizontalContentAlignment="Left"/>
+                        <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged"/>
                         <RichTextBox Grid.Row="1"></RichTextBox>
                         <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Grid.Row="2"></Label>
                     </Grid>

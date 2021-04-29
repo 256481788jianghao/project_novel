@@ -34,6 +34,9 @@ namespace NovelEditor
         public ObservableCollection<INode> CurNovelTree { get; set; }
         
         [JsonIgnore]
+        public INode CurNode { get; set; }
+
+        [JsonIgnore]
         public string Panel_Cpation { get; set; }
 
         public void CopyFrom(GVL other)

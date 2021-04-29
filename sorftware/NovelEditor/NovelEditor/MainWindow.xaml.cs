@@ -110,5 +110,49 @@ namespace NovelEditor
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void TreeView_Novel_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TreeView_Novel_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            INode item = e.NewValue as INode;
+            if(item != null)
+            {
+                GVL.Instance.CurNode = new INode(item.GID, item.Name);
+                if (GVL.Instance.CurNovel.IsNovelGUID(item.GID))
+                {
+                    GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
+                }
+                else
+                {
+                    NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(item.GID);
+                    if(chapter != null)
+                    {
+                        GVL.Instance.Panel_Cpation = chapter.Name;
+                    }
+                }
+            }
+        }
+
+        private void TextBox_Panel_Cpation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox box = sender as TextBox;
+            if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
+            {
+                GVL.Instance.CurNovel.Name = box.Text;
+            }
+            else
+            {
+                NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
+                if (chapter != null)
+                {
+                    chapter.Name = box.Text;
+                }
+            }
+            GVL.Instance.UpdateTreeView();
+        }
     }
 }
