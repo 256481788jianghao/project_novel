@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NovelEditor"
         mc:Ignorable="d"
         xmlns:pu="clr-namespace:EasyGoodLookUI;assembly=EasyGoodLookUI"
-        Title="NovelEditor" Height="450" Width="800">
+        Title="NovelEditor" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Porject" Height="30">
+                <MenuItem x:Name="MenuItem_NewNovel" Header="New Novel" Click="MenuItem_NewNovel_Click"></MenuItem>
                 <MenuItem Header="Import"></MenuItem>
                 <MenuItem Header="Export"></MenuItem>
             </MenuItem>

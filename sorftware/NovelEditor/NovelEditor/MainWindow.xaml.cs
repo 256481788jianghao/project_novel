@@ -24,5 +24,23 @@ namespace NovelEditor
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            GVL.Init();
+            this.DataContext = GVL.Instance;
+        }
+
+        private void MenuItem_NewNovel_Click(object sender, RoutedEventArgs e)
+        {
+            NewNovelForm form = new NewNovelForm();
+            form.NewNovelEvent += new NewNovelForm.NewNovelDelegate(NewNovelCB);
+            form.ShowDialog();
+        }
+
+        void NewNovelCB(string filename, string filepath)
+        {
+            MessageBox.Show(filename);
+        }
     }
 }
