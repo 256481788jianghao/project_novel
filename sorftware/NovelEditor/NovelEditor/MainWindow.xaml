@@ -34,9 +34,11 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition/>
+                            <RowDefinition Height="20"/>
                         </Grid.RowDefinitions>
                         <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                         <RichTextBox Grid.Row="1"></RichTextBox>
+                        <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Grid.Row="2"></Label>
                     </Grid>
                     <GridSplitter Width="3"/>
                 </Grid>
@@ -56,6 +58,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label x:Name="Label_FootTip"></Label>
+        <Label x:Name="Label_FootTip" Grid.Row="2"></Label>
     </Grid>
 </Window>
