@@ -13,9 +13,11 @@ namespace NovelEditor.DB
         public string Name { get ; set ; }
 
         public Guid GID { get; }
+        public byte[] XMLContent { get; set; }
         public NovelChapter()
         {
             GID = Guid.NewGuid();
+            XMLContent = new byte[Novel.XMLContentLength];
         }
 
         public int CompareTo(NovelChapter other)

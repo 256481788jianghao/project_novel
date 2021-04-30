@@ -50,6 +50,7 @@ namespace NovelEditor
                 Novel newNovel = new Novel();
                 newNovel.Name = filename;
                 GVL.Instance.CurNovel = newNovel;
+                MainDocMgr.SetDefaultDoc(GVL.Instance.CurNovel.XMLContent);
                 SaveToFile(GVL.Instance.NovelFilePath);
                 GVL.Instance.UpdateTreeView();
             }
@@ -59,20 +60,10 @@ namespace NovelEditor
             }
         }
 
-        bool SaveToFile(string filepath)
+        void SaveToFile(string filepath)
         {
-            if (File.Exists(filepath))
-            {
-                string alltext = JsonConvert.SerializeObject(GVL.Instance);
-                File.WriteAllText(filepath, alltext);
-                return true;
-            }
-            else
-            {
-                MessageBox.Show("请导入或新建Novel");
-                return false;
-            }
-           
+            string alltext = JsonConvert.SerializeObject(GVL.Instance);
+            File.WriteAllText(filepath, alltext);
         }
 
         GVL ReadFromFile(string filepath)
@@ -135,6 +126,15 @@ namespace NovelEditor
                 if (GVL.Instance.CurNovel.IsNovelGUID(item.GID))
                 {
                     GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
+                    try
+                    {
+                        MainDocMgr.ReadDocFromMemory(RichTextBox_MainDoc, GVL.Instance.CurNovel.XMLContent);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                    
                 }
                 else
                 {
@@ -142,6 +142,14 @@ namespace NovelEditor
                     if(chapter != null)
                     {
                         GVL.Instance.Panel_Cpation = chapter.Name;
+                        try
+                        {
+                            MainDocMgr.ReadDocFromMemory(RichTextBox_MainDoc, chapter.XMLContent);
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
                     }
                 }
             }
@@ -150,19 +158,23 @@ namespace NovelEditor
         private void TextBox_Panel_Cpation_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox box = sender as TextBox;
-            if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
+            if (GVL.Instance.CurNode != null)
             {
-                GVL.Instance.CurNovel.Name = box.Text;
-            }
-            else
-            {
-                NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
-                if (chapter != null)
+                if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
                 {
-                    chapter.Name = box.Text;
+                    //FIXME:TextBox仅在失去焦点时才进行twoway的更新
+                    GVL.Instance.CurNovel.Name = box.Text;
                 }
+                else
+                {
+                    NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
+                    if (chapter != null)
+                    {
+                        chapter.Name = box.Text;
+                    }
+                }
+                GVL.Instance.UpdateTreeView();
             }
-            GVL.Instance.UpdateTreeView();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -171,9 +183,14 @@ namespace NovelEditor
             {
                 try
                 {
-                    if (SaveToFile(GVL.Instance.NovelFilePath))
+                    if (File.Exists(GVL.Instance.NovelFilePath))
                     {
+                        SaveToFile(GVL.Instance.NovelFilePath);
                         GVL.Instance.Label_WritePanel_Tip_Content = "Save : " + DateTime.Now.ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("请导入或新建Novel");
                     }
                 }
                 catch (Exception ex)
@@ -182,6 +199,27 @@ namespace NovelEditor
                     GVL.Instance.Label_WritePanel_Tip_Content = "Save error : " + DateTime.Now.ToString();
                 }
                 e.Handled = true;
+            }
+        }
+
+        private void RichTextBox_MainDoc_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RichTextBox rbox = sender as RichTextBox;
+            if (GVL.Instance.CurNode != null)
+            {
+                if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
+                {
+                    MainDocMgr.SaveDocmentToMemory(RichTextBox_MainDoc, GVL.Instance.CurNovel.XMLContent);
+                }
+                else
+                {
+                    NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
+                    if (chapter != null)
+                    {
+                        MainDocMgr.SaveDocmentToMemory(RichTextBox_MainDoc, chapter.XMLContent);
+                    }
+                }
+                GVL.Instance.UpdateTreeView();
             }
         }
     }

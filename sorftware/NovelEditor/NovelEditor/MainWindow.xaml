@@ -54,7 +54,7 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged"/>
-                        <RichTextBox Grid.Row="1"></RichTextBox>
+                        <RichTextBox x:Name="RichTextBox_MainDoc" Grid.Row="1" TextChanged="RichTextBox_MainDoc_TextChanged"></RichTextBox>
                         <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Content="{Binding Label_WritePanel_Tip_Content}" Grid.Row="2"></Label>
                     </Grid>
                     <GridSplitter Width="3"/>
@@ -75,6 +75,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label x:Name="Label_FootTip" Grid.Row="2"></Label>
+        <Label x:Name="Label_FootTip" Content="{Binding Panel_Cpation}" Grid.Row="2"></Label>
     </Grid>
 </Window>

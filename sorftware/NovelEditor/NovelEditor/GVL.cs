@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace NovelEditor
 {
@@ -41,7 +42,7 @@ namespace NovelEditor
         
         [JsonIgnore]
         public string Label_WritePanel_Tip_Content { get; set; }
-
+      
         public void CopyFrom(GVL other)
         {
             this.NovelFilePath = other.NovelFilePath;

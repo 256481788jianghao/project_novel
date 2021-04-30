@@ -9,13 +9,16 @@ namespace NovelEditor.DB
 {
     class Novel
     {
+        public static int XMLContentLength = 1024 * 10; //10M
         public string Name { get ; set ; }
         public List<NovelChapter> Chapters { get; set; }
         public Guid GID { get ; }
+        public byte[] XMLContent { get; set; }
 
         public Novel()
         {
             Chapters = new List<NovelChapter>();
+            XMLContent = new byte[XMLContentLength];
             GID = Guid.NewGuid();
         }
 
