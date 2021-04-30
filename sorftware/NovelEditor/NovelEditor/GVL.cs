@@ -67,7 +67,7 @@ namespace NovelEditor
 
         int GetStrLength(string s)
         {
-            return System.Text.Encoding.UTF8.GetBytes(s).Length;
+            return s.Length;
         }
     }
 }
