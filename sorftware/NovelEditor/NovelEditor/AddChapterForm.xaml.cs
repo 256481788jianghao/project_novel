@@ -39,7 +39,6 @@ namespace NovelEditor
                         NovelChapter chapter = new NovelChapter();
                         chapter.ChapterIndex = Convert.ToInt32(ChapterIndex);
                         chapter.Name = ChapterName;
-                        MainDocMgr.SetDefaultDoc(chapter.XMLContent);
                         GVL.Instance.CurNovel.Chapters.Add(chapter);
                         GVL.Instance.UpdateTreeView();
                     }

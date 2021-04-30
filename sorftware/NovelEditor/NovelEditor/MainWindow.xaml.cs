@@ -12,10 +12,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace NovelEditor
 {
@@ -24,6 +26,7 @@ namespace NovelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer m_SaveTimer;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +36,31 @@ namespace NovelEditor
         {
             GVL.Init();
             this.DataContext = GVL.Instance;
+            m_SaveTimer = new DispatcherTimer();
+            m_SaveTimer.Tick += new EventHandler(SaveTimerCB);
+            m_SaveTimer.Interval = TimeSpan.FromSeconds(10);
+            m_SaveTimer.Start();
+        }
+
+        void SaveTimerCB(object sender, EventArgs e)
+        {
+            try
+            {
+                if (File.Exists(GVL.Instance.NovelFilePath))
+                {
+                    SaveToFile(GVL.Instance.NovelFilePath);
+                    GVL.Instance.Label_WritePanel_Tip_Content = "atuo Save : " + DateTime.Now.ToString();
+                }
+                else
+                {
+                    //MessageBox.Show("请导入或新建Novel");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                GVL.Instance.Label_WritePanel_Tip_Content = "auto Save error : " + DateTime.Now.ToString();
+            }
         }
 
         private void MenuItem_NewNovel_Click(object sender, RoutedEventArgs e)
@@ -50,7 +78,6 @@ namespace NovelEditor
                 Novel newNovel = new Novel();
                 newNovel.Name = filename;
                 GVL.Instance.CurNovel = newNovel;
-                MainDocMgr.SetDefaultDoc(GVL.Instance.CurNovel.XMLContent);
                 SaveToFile(GVL.Instance.NovelFilePath);
                 GVL.Instance.UpdateTreeView();
             }
@@ -128,7 +155,15 @@ namespace NovelEditor
                     GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
                     try
                     {
-                        MainDocMgr.ReadDocFromMemory(RichTextBox_MainDoc, GVL.Instance.CurNovel.XMLContent);
+                        if (!string.IsNullOrEmpty(GVL.Instance.CurNovel.DocumentStr))
+                        {
+                            FlowDocument doc = XamlReader.Parse(GVL.Instance.CurNovel.DocumentStr) as FlowDocument;
+                            RichTextBox_MainDoc.Document = doc;
+                        }
+                        else
+                        {
+                            RichTextBox_MainDoc.Document = new FlowDocument();
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -144,7 +179,15 @@ namespace NovelEditor
                         GVL.Instance.Panel_Cpation = chapter.Name;
                         try
                         {
-                            MainDocMgr.ReadDocFromMemory(RichTextBox_MainDoc, chapter.XMLContent);
+                            if (!string.IsNullOrEmpty(chapter.DocumentStr))
+                            {
+                                FlowDocument doc = XamlReader.Parse(chapter.DocumentStr) as FlowDocument;
+                                RichTextBox_MainDoc.Document = doc;
+                            }
+                            else
+                            {
+                                RichTextBox_MainDoc.Document = new FlowDocument();
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -209,14 +252,16 @@ namespace NovelEditor
             {
                 if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
                 {
-                    MainDocMgr.SaveDocmentToMemory(RichTextBox_MainDoc, GVL.Instance.CurNovel.XMLContent);
+                    GVL.Instance.CurNovel.DocumentStr = XamlWriter.Save(RichTextBox_MainDoc.Document);
                 }
                 else
                 {
                     NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
                     if (chapter != null)
                     {
-                        MainDocMgr.SaveDocmentToMemory(RichTextBox_MainDoc, chapter.XMLContent);
+                        chapter.DocumentStr = XamlWriter.Save(RichTextBox_MainDoc.Document);
+                        TextRange range = new TextRange(RichTextBox_MainDoc.Document.ContentStart, RichTextBox_MainDoc.Document.ContentEnd);
+                        chapter.MainText = range.Text;
                     }
                 }
                 GVL.Instance.UpdateTreeView();

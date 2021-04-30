@@ -56,13 +56,18 @@ namespace NovelEditor
         public void UpdateTreeView()
         {
             CurNovelTree.Clear();
-            INode rootNode = new INode(CurNovel.GID, CurNovel.Name);
+            INode rootNode = new INode(CurNovel.GID, CurNovel.Name+"("+ GetStrLength(CurNovel.AllText).ToString()+")");
             CurNovel.Chapters.Sort();
             foreach(NovelChapter item in CurNovel.Chapters)
             {
-                rootNode.Children.Add(new INode(item.GID, item.ChapterIndex.ToString()+"."+item.Name));
+                rootNode.Children.Add(new INode(item.GID, item.ChapterIndex.ToString()+"."+item.Name+ "(" + GetStrLength(item.MainText).ToString() + ")"));
             }
             CurNovelTree.Add(rootNode);
+        }
+
+        int GetStrLength(string s)
+        {
+            return System.Text.Encoding.UTF8.GetBytes(s).Length;
         }
     }
 }

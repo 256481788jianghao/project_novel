@@ -41,7 +41,7 @@ namespace NovelEditor
         {
             FlowDocument doc = box.Document;
             TextRange range = new TextRange(doc.ContentStart, doc.ContentEnd);
-            using (MemoryStream stream = new MemoryStream(Content))
+            using (BufferedStream stream = new BufferedStream(new MemoryStream(Content)))
             {
                 range.Save(stream, "Xaml");
             }

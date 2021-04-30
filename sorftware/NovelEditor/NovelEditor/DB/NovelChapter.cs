@@ -1,41 +1,30 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Markup;
 
 namespace NovelEditor.DB
 {
+    [JsonObject(MemberSerialization.OptOut)]
     class NovelChapter:IComparable<NovelChapter>
     {
         public int ChapterIndex { get; set; }
         public string Name { get ; set ; }
-
         public Guid GID { get; }
-        public byte[] XMLContent { get; set; }
+        public string DocumentStr { get; set; }
+
+
         public NovelChapter()
         {
             GID = Guid.NewGuid();
-            XMLContent = new byte[Novel.XMLContentLength];
         }
 
-        public string MainText
-        {
-            get
-            {
-                FlowDocument doc = MainDocMgr.ContentToDocument(XMLContent);
-                if(doc == null)
-                {
-                    return "";
-                }
-                else
-                {
-                    return MainDocMgr.DocumentToText(doc);
-                }
-            }
-        }
+        public string MainText;
 
         public int CompareTo(NovelChapter other)
         {
