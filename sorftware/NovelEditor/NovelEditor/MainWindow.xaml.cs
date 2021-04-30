@@ -222,5 +222,18 @@ namespace NovelEditor
                 GVL.Instance.UpdateTreeView();
             }
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl item = sender as TabControl;
+            if (item != null)
+            {
+                if(item.SelectedIndex == 1 && GVL.Instance.CurNovel != null)
+                {
+                    GVL.Instance.AllText = GVL.Instance.CurNovel.AllText;
+                }
+            }
+            
+        }
     }
 }

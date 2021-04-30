@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace NovelEditor.DB
 {
@@ -18,6 +19,22 @@ namespace NovelEditor.DB
         {
             GID = Guid.NewGuid();
             XMLContent = new byte[Novel.XMLContentLength];
+        }
+
+        public string MainText
+        {
+            get
+            {
+                FlowDocument doc = MainDocMgr.ContentToDocument(XMLContent);
+                if(doc == null)
+                {
+                    return "";
+                }
+                else
+                {
+                    return MainDocMgr.DocumentToText(doc);
+                }
+            }
         }
 
         public int CompareTo(NovelChapter other)

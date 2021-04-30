@@ -42,6 +42,9 @@ namespace NovelEditor
         
         [JsonIgnore]
         public string Label_WritePanel_Tip_Content { get; set; }
+        
+        [JsonIgnore]
+        public string AllText { get; set; }
       
         public void CopyFrom(GVL other)
         {

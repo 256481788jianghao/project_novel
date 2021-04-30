@@ -23,7 +23,7 @@
                 <MenuItem Header="Version"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Main">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -53,11 +53,16 @@
                             <RowDefinition/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged"/>
-                        <RichTextBox x:Name="RichTextBox_MainDoc" Grid.Row="1" TextChanged="RichTextBox_MainDoc_TextChanged"></RichTextBox>
+                        <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged" FontSize="16"/>
+                        <RichTextBox x:Name="RichTextBox_MainDoc" Grid.Row="1" TextChanged="RichTextBox_MainDoc_TextChanged" FontSize="14"></RichTextBox>
                         <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Content="{Binding Label_WritePanel_Tip_Content}" Grid.Row="2"></Label>
                     </Grid>
                     <GridSplitter Width="3"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="AllText">
+                <Grid>
+                    <TextBox Text="{Binding AllText}" FontSize="17"></TextBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Set">

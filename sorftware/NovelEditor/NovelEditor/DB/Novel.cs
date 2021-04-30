@@ -31,5 +31,18 @@ namespace NovelEditor.DB
         {
             return Chapters.Find(it => it.GID == gid);
         }
+
+        public string AllText
+        {
+            get
+            {
+                string allstr = Name+ "\r\n\r\n";
+                foreach(NovelChapter chapter in Chapters)
+                {
+                    allstr += chapter.ChapterIndex.ToString()+"."+chapter.Name+ "\r\n\r\n" + chapter.MainText + "\r\n";
+                }
+                return allstr;
+            }
+        }
     }
 }
