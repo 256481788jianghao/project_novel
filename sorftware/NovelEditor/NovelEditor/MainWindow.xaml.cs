@@ -153,6 +153,7 @@ namespace NovelEditor
                 if (GVL.Instance.CurNovel.IsNovelGUID(item.GID))
                 {
                     GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
+                    GVL.Instance.ChapterLabelList.Clear();
                     try
                     {
                         if (!string.IsNullOrEmpty(GVL.Instance.CurNovel.DocumentStr))
@@ -177,6 +178,11 @@ namespace NovelEditor
                     if(chapter != null)
                     {
                         GVL.Instance.Panel_Cpation = chapter.Name;
+                        GVL.Instance.ChapterLabelList.Clear();
+                        foreach(NovelChapterLabel label in chapter.Labels)
+                        {
+                            GVL.Instance.ChapterLabelList.Add(label);
+                        }
                         try
                         {
                             if (!string.IsNullOrEmpty(chapter.DocumentStr))
@@ -279,6 +285,11 @@ namespace NovelEditor
                 }
             }
             
+        }
+
+        private void MenuItem_AddChapterLabel_Click(object sender, RoutedEventArgs e)
+        {
+            GVL.Instance.ChapterLabelList.Add(new NovelChapterLabel());
         }
     }
 }

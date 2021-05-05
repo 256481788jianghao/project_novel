@@ -26,6 +26,7 @@ namespace NovelEditor
         public GVL()
         {
             CurNovelTree = new ObservableCollection<INode>();
+            ChapterLabelList = new ObservableCollection<NovelChapterLabel>();
         }
 
         public string NovelFilePath { get; set; }
@@ -33,7 +34,10 @@ namespace NovelEditor
 
         [JsonIgnore]
         public ObservableCollection<INode> CurNovelTree { get; set; }
-        
+
+        [JsonIgnore]
+        public ObservableCollection<NovelChapterLabel> ChapterLabelList { get; set; }
+
         [JsonIgnore]
         public INode CurNode { get; set; }
 
@@ -60,14 +64,17 @@ namespace NovelEditor
             CurNovel.Chapters.Sort();
             foreach(NovelChapter item in CurNovel.Chapters)
             {
-                rootNode.Children.Add(new INode(item.GID, item.ChapterIndex.ToString()+"."+item.Name+ "(" + GetStrLength(item.MainText).ToString() + ")"));
+                if (item.MainText != null)
+                {
+                    rootNode.Children.Add(new INode(item.GID, item.ChapterIndex.ToString() + "." + item.Name + "(" + GetStrLength(item.MainText).ToString() + ")"));
+                }
             }
             CurNovelTree.Add(rootNode);
         }
 
         int GetStrLength(string s)
         {
-            return s.Length;
+            return s.Replace("\r\n","").Length;
         }
     }
 }

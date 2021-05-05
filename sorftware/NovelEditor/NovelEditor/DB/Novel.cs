@@ -13,7 +13,6 @@ namespace NovelEditor.DB
     [JsonObject(MemberSerialization.OptOut)]
     class Novel
     {
-        public static int XMLContentLength = 1024 * 10; //10M
         public string Name { get ; set ; }
         public List<NovelChapter> Chapters { get; set; }
         public Guid GID { get; }
@@ -34,7 +33,7 @@ namespace NovelEditor.DB
         {
             return Chapters.Find(it => it.GID == gid);
         }
-
+        [JsonIgnore]
         public string AllText
         {
             get

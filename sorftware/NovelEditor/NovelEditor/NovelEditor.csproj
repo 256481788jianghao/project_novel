@@ -87,6 +87,7 @@
     <Compile Include="DB\INode.cs" />
     <Compile Include="DB\Novel.cs" />
     <Compile Include="DB\NovelChapter.cs" />
+    <Compile Include="DB\NovelChapterLabel.cs" />
     <Compile Include="GVL.cs" />
     <Compile Include="MainDocMgr.cs" />
     <Compile Include="MainWindow.xaml.cs">
