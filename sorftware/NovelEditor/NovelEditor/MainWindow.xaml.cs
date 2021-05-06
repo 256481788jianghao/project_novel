@@ -291,5 +291,28 @@ namespace NovelEditor
         {
             GVL.Instance.ChapterLabelList.Add(new NovelChapterLabel());
         }
+
+        private void TreeView_MenuItem_DelChapter_Click(object sender, RoutedEventArgs e)
+        {
+            if(GVL.Instance.CurNode != null)
+            {
+                if (!GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
+                {
+                    NovelChapter item = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
+                    if(MessageBox.Show("确定删除++"+item.Name+"++吗？","温馨提示",MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        GVL.Instance.CurNovel.Chapters.Remove(item);
+                        GVL.Instance.CurNode.Children.Remove(GVL.Instance.CurNode);
+                        GVL.Instance.CurNode = null;
+                        GVL.Instance.UpdateTreeView();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("不能删除根节点");
+                }
+                
+            }
+        }
     }
 }

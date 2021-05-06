@@ -39,6 +39,7 @@
                         <TreeView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="TreeView_MenuItem_AddChapter" Header="ADD Chapter" Click="TreeView_MenuItem_AddChapter_Click"></MenuItem>
+                                <MenuItem x:Name="TreeView_MenuItem_DelChapter" Header="Delete Select Chapter" Click="TreeView_MenuItem_DelChapter_Click"></MenuItem>
                             </ContextMenu>
                         </TreeView.ContextMenu>
                         <TreeView.ItemTemplate>
