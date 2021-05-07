@@ -60,7 +60,7 @@
                             <ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem x:Name="MenuItem_AddChapterLabel" Header="Add Chapter Label" Click="MenuItem_AddChapterLabel_Click"></MenuItem>
-                                    <MenuItem Header="Delete Chapter Label"></MenuItem>
+                                    <MenuItem Header="Delete Select Chapter Label"></MenuItem>
                                 </ContextMenu>
                             </ListView.ContextMenu>
                             <ListView.View>
