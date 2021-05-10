@@ -27,10 +27,15 @@ namespace NovelEditor
         {
             CurNovelTree = new ObservableCollection<INode>();
             ChapterLabelList = new ObservableCollection<NovelChapterLabel>();
+            OutlineTree = new ObservableCollection<OutlineNode>();
         }
 
         public string NovelFilePath { get; set; }
         public Novel CurNovel { get; set; }
+        public ObservableCollection<OutlineNode> OutlineTree { get; set; }
+
+        [JsonIgnore]
+        public OutlineNode CurOutlineNode { get; set; } = null;
 
         [JsonIgnore]
         public ObservableCollection<INode> CurNovelTree { get; set; }

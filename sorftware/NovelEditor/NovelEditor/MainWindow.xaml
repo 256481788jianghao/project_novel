@@ -24,6 +24,48 @@
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="大纲">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+                    <TreeView x:Name="TreeView_Outline" ItemsSource="{Binding OutlineTree}" SelectedItemChanged="TreeView_Outline_SelectedItemChanged">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsExpanded" Value="True" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="TreeView_OutLine_MenuItem_add" Header="增加节点" Click="TreeView_OutLine_MenuItem_add_Click"></MenuItem>
+                                <MenuItem x:Name="TreeView_OutLine_MenuItem_del"  Header="删除节点"></MenuItem>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Background="{Binding BKColor}" Width="20" Height="20"></Label>
+                                    <Label Content="{Binding Content}" Grid.Column="1"></Label>
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="Button_Outline_ColorSelect" Content="颜色标记" Click="Button_Outline_ColorSelect_Click"></Button>
+                        <TextBox x:Name="TextBox_Outline_Content" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ></TextBox>
+                    </Grid>
+                </Grid>
+            </TabItem>
             <TabItem Header="Main">
                 <Grid>
                     <Grid.ColumnDefinitions>

@@ -314,5 +314,39 @@ namespace NovelEditor
                 
             }
         }
+
+        private void Button_Outline_ColorSelect_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog dialog = new System.Windows.Forms.ColorDialog();
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string c = dialog.Color.ToArgb().ToString("X");
+                if(GVL.Instance.CurOutlineNode != null)
+                {
+                    GVL.Instance.CurOutlineNode.BKColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#"+c));  
+                }
+            }
+        }
+
+        private void TreeView_OutLine_MenuItem_add_Click(object sender, RoutedEventArgs e)
+        {
+            if(GVL.Instance.OutlineTree.Count == 0)
+            {
+                GVL.Instance.OutlineTree.Add(new OutlineNode());
+            }
+            else
+            {
+                if(GVL.Instance.CurOutlineNode != null)
+                {
+                    GVL.Instance.CurOutlineNode.Children.Add(new OutlineNode());
+                }
+            }
+        }
+
+        private void TreeView_Outline_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            OutlineNode node = e.NewValue as OutlineNode;
+            GVL.Instance.CurOutlineNode = node;
+        }
     }
 }
