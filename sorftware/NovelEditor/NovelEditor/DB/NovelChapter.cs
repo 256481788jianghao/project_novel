@@ -17,13 +17,14 @@ namespace NovelEditor.DB
         public string Name { get ; set ; }
         public Guid GID { get; }
         public string DocumentStr { get; set; }
-        public List<NovelChapterLabel> Labels { get; set; }
+        public string Instraction { get; set; }
+        //public List<NovelChapterLabel> Labels { get; set; }
 
 
         public NovelChapter()
         {
             GID = Guid.NewGuid();
-            Labels = new List<NovelChapterLabel>();
+            //Labels = new List<NovelChapterLabel>();
         }
 
         public string MainText ="";

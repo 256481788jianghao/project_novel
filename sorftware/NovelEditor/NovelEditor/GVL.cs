@@ -60,6 +60,10 @@ namespace NovelEditor
             this.NovelFilePath = other.NovelFilePath;
             this.CurNovel = other.CurNovel;
             UpdateTreeView();
+            foreach(OutlineNode node in other.OutlineTree)
+            {
+                this.OutlineTree.Add(node);
+            }
         }
 
         public void UpdateTreeView()

@@ -24,5 +24,41 @@ namespace NovelEditor.DB
             Content = "New";
             Children = new ObservableCollection<OutlineNode>();
         }
+
+        public OutlineNode FindInChildren(Guid ID)
+        {
+            OutlineNode ans = null;
+            foreach(OutlineNode item in Children)
+            {
+                if(item.GID == ID)
+                {
+                    ans = item;
+                }
+            }
+            return ans;
+        }
+
+        public void DelItem(Guid ID)
+        {
+            OutlineNode node = FindInChildren(ID);
+            if(node != null)
+            {
+                Children.Remove(node);
+            }
+            else
+            {
+                if(Children.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    foreach(OutlineNode item in Children)
+                    {
+                        item.DelItem(ID);
+                    }
+                }
+            }
+        }
     }
 }

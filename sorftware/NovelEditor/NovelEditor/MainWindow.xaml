@@ -39,7 +39,7 @@
                         <TreeView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="TreeView_OutLine_MenuItem_add" Header="增加节点" Click="TreeView_OutLine_MenuItem_add_Click"></MenuItem>
-                                <MenuItem x:Name="TreeView_OutLine_MenuItem_del"  Header="删除节点"></MenuItem>
+                                <MenuItem x:Name="TreeView_OutLine_MenuItem_del"  Header="删除节点" Click="TreeView_OutLine_MenuItem_del_Click"></MenuItem>
                             </ContextMenu>
                         </TreeView.ContextMenu>
                         <TreeView.ItemTemplate>
@@ -62,7 +62,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Button x:Name="Button_Outline_ColorSelect" Content="颜色标记" Click="Button_Outline_ColorSelect_Click"></Button>
-                        <TextBox x:Name="TextBox_Outline_Content" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ></TextBox>
+                        <TextBox x:Name="TextBox_Outline_Content" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" TextChanged="TextBox_Outline_Content_TextChanged" ></TextBox>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -81,6 +81,7 @@
                         <TreeView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="TreeView_MenuItem_AddChapter" Header="ADD Chapter" Click="TreeView_MenuItem_AddChapter_Click"></MenuItem>
+                                <MenuItem x:Name="TreeView_MenuItem_AddChapterByForm" Header="ADD Chapter by Form" Click="TreeView_MenuItem_AddChapterByForm_Click"></MenuItem>
                                 <MenuItem x:Name="TreeView_MenuItem_DelChapter" Header="Delete Select Chapter" Click="TreeView_MenuItem_DelChapter_Click"></MenuItem>
                             </ContextMenu>
                         </TreeView.ContextMenu>
@@ -97,8 +98,9 @@
                             <RowDefinition/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center" Text="{Binding Panel_Cpation,Mode=TwoWay}" HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged" FontSize="16"/>
-                        <ListView Grid.Row="1" ItemsSource="{Binding ChapterLabelList}">
+                        <TextBox x:Name="TextBox_Panel_Cpation" VerticalContentAlignment="Center"  HorizontalContentAlignment="Left" TextChanged="TextBox_Panel_Cpation_TextChanged" FontSize="16"/>
+                        <TextBox x:Name="TextBox_BeiZhu" Grid.Row="1" TextChanged="TextBox_BeiZhu_TextChanged" TextWrapping="Wrap" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"></TextBox>
+                        <!--<ListView Grid.Row="1" ItemsSource="{Binding ChapterLabelList}">
                             <ListView.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem x:Name="MenuItem_AddChapterLabel" Header="Add Chapter Label" Click="MenuItem_AddChapterLabel_Click"></MenuItem>
@@ -111,7 +113,7 @@
                                     <GridViewColumn Header="内容" Width="300" DisplayMemberBinding="{Binding LabelContent}"></GridViewColumn>
                                 </GridView>
                             </ListView.View>
-                        </ListView>
+                        </ListView>-->
                         
                         <RichTextBox x:Name="RichTextBox_MainDoc" Grid.Row="2" TextChanged="RichTextBox_MainDoc_TextChanged" FontSize="14"></RichTextBox>
                         <Label Background="Wheat" x:Name="Label_WritePanel_Tip" Content="{Binding Label_WritePanel_Tip_Content}" Grid.Row="3"></Label>

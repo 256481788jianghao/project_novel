@@ -49,7 +49,7 @@ namespace NovelEditor
                 if (File.Exists(GVL.Instance.NovelFilePath))
                 {
                     SaveToFile(GVL.Instance.NovelFilePath);
-                    GVL.Instance.Label_WritePanel_Tip_Content = "atuo Save : " + DateTime.Now.ToString();
+                    GVL.Instance.Panel_Cpation = "atuo Save : " + DateTime.Now.ToString();
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace NovelEditor
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                GVL.Instance.Label_WritePanel_Tip_Content = "auto Save error : " + DateTime.Now.ToString();
+                GVL.Instance.Panel_Cpation = "auto Save error : " + DateTime.Now.ToString();
             }
         }
 
@@ -78,6 +78,9 @@ namespace NovelEditor
                 Novel newNovel = new Novel();
                 newNovel.Name = filename;
                 GVL.Instance.CurNovel = newNovel;
+                OutlineNode node = new OutlineNode();
+                node.Content = filename;
+                GVL.Instance.OutlineTree.Add(node);
                 SaveToFile(GVL.Instance.NovelFilePath);
                 GVL.Instance.UpdateTreeView();
             }
@@ -122,8 +125,22 @@ namespace NovelEditor
 
         private void TreeView_MenuItem_AddChapter_Click(object sender, RoutedEventArgs e)
         {
-            AddChapterForm form = new AddChapterForm();
-            form.ShowDialog();
+            try
+            {
+                if (GVL.Instance.CurNovelTree.Count > 0)
+                {
+                    NovelChapter chapter = new NovelChapter();
+                    chapter.ChapterIndex = Convert.ToInt32(GVL.Instance.CurNovel.Chapters.Count+1);
+                    chapter.Name = "新的一章";
+                    GVL.Instance.CurNovel.Chapters.Add(chapter);
+                    GVL.Instance.UpdateTreeView();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void MenuItem_Save_Click(object sender, RoutedEventArgs e)
@@ -152,7 +169,9 @@ namespace NovelEditor
                 GVL.Instance.CurNode = new INode(item.GID, item.Name);
                 if (GVL.Instance.CurNovel.IsNovelGUID(item.GID))
                 {
-                    GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
+                    //GVL.Instance.Panel_Cpation = GVL.Instance.CurNovel.Name;
+                    TextBox_Panel_Cpation.Text = GVL.Instance.CurNovel.Name;
+                    TextBox_BeiZhu.Text = "";
                     GVL.Instance.ChapterLabelList.Clear();
                     try
                     {
@@ -177,12 +196,11 @@ namespace NovelEditor
                     NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(item.GID);
                     if(chapter != null)
                     {
-                        GVL.Instance.Panel_Cpation = chapter.Name;
+                        //GVL.Instance.Panel_Cpation = chapter.Name;
+                        TextBox_Panel_Cpation.Text = chapter.Name;
+                        TextBox_BeiZhu.Text = chapter.Instraction;
                         GVL.Instance.ChapterLabelList.Clear();
-                        foreach(NovelChapterLabel label in chapter.Labels)
-                        {
-                            GVL.Instance.ChapterLabelList.Add(label);
-                        }
+                        
                         try
                         {
                             if (!string.IsNullOrEmpty(chapter.DocumentStr))
@@ -235,7 +253,7 @@ namespace NovelEditor
                     if (File.Exists(GVL.Instance.NovelFilePath))
                     {
                         SaveToFile(GVL.Instance.NovelFilePath);
-                        GVL.Instance.Label_WritePanel_Tip_Content = "Save : " + DateTime.Now.ToString();
+                        GVL.Instance.Panel_Cpation = "Save : " + DateTime.Now.ToString();
                     }
                     else
                     {
@@ -245,7 +263,7 @@ namespace NovelEditor
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
-                    GVL.Instance.Label_WritePanel_Tip_Content = "Save error : " + DateTime.Now.ToString();
+                    GVL.Instance.Panel_Cpation = "Save error : " + DateTime.Now.ToString();
                 }
                 e.Handled = true;
             }
@@ -323,7 +341,7 @@ namespace NovelEditor
                 string c = dialog.Color.ToArgb().ToString("X");
                 if(GVL.Instance.CurOutlineNode != null)
                 {
-                    GVL.Instance.CurOutlineNode.BKColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#"+c));  
+                    GVL.Instance.CurOutlineNode.BKColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#"+c));
                 }
             }
         }
@@ -345,8 +363,61 @@ namespace NovelEditor
 
         private void TreeView_Outline_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            OutlineNode node = e.NewValue as OutlineNode;
-            GVL.Instance.CurOutlineNode = node;
+            //OutlineNode node = e.NewValue as OutlineNode;
+            GVL.Instance.CurOutlineNode = TreeView_Outline.SelectedItem as OutlineNode;
+            if(GVL.Instance.CurOutlineNode != null)
+            {
+                TextBox_Outline_Content.Text = GVL.Instance.CurOutlineNode.Content;
+            }
+        }
+
+        private void TextBox_Outline_Content_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (GVL.Instance.CurOutlineNode != null)
+            {
+                GVL.Instance.CurOutlineNode.Content = TextBox_Outline_Content.Text;
+            }
+        }
+
+        private void TreeView_OutLine_MenuItem_del_Click(object sender, RoutedEventArgs e)
+        {
+            if (GVL.Instance.CurOutlineNode != null)
+            {
+               if(GVL.Instance.OutlineTree.Count > 0)
+                {
+                    foreach(OutlineNode node in GVL.Instance.OutlineTree)
+                    {
+                        node.DelItem(GVL.Instance.CurOutlineNode.GID);
+                    }
+                    GVL.Instance.CurOutlineNode = TreeView_Outline.SelectedItem as OutlineNode;
+                }
+            }
+        }
+
+        private void TextBox_BeiZhu_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox box = sender as TextBox;
+            if (GVL.Instance.CurNode != null)
+            {
+                if (GVL.Instance.CurNovel.IsNovelGUID(GVL.Instance.CurNode.GID))
+                {
+                    
+                }
+                else
+                {
+                    NovelChapter chapter = GVL.Instance.CurNovel.FindChapterByGUID(GVL.Instance.CurNode.GID);
+                    if (chapter != null)
+                    {
+                        chapter.Instraction = box.Text;
+                    }
+                }
+            }
+        }
+
+        private void TreeView_MenuItem_AddChapterByForm_Click(object sender, RoutedEventArgs e)
+        {
+            AddChapterForm form = new AddChapterForm();
+            form.ShowDialog();
         }
     }
 }
